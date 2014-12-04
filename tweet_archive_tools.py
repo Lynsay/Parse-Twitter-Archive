@@ -1,4 +1,4 @@
-## Last updated 8 Dec 2013
+## Last updated 4 Dec 2014
 ##
 ## This program takes data from a locally downloaded Twitter archive
 ## and outputs HTML, Text, JSON, geo-coords in CSV, and best friends in csv.
@@ -88,16 +88,21 @@ def get_csv_output(d):
                 ))
     return output
         
-
+'''
+changes made to the get_geo method
+added ID parameter- allows a link to the tweet to be generated
+e.g. https://twitter.com/USERNAME/status/ID
+'''
 def get_geo(d):
-    output = [('date', 'tweet', 'lat', 'long')]
+    output = [('id', 'date', 'tweet', 'lat', 'long')]
     for item in d:
         try:
+            idtweet=item['id_str']
             lat = item['geo']['coordinates'][0]
             long = item['geo']['coordinates'][1]
             date = item['created_at']
             text = item['text'].encode('utf-8')
-            output.append((date, text, lat, long))
+            output.append((idtweet,date, text, lat, long))
         except:
             error = "no coordinates"
     return output
